@@ -2,7 +2,7 @@ import HeaderBox from '@/components/HeaderBox'
 import React from 'react'
 
 const Home = () => {
-  const loggedIn = { firstName: 'Adrian' };
+  const loggedIn = { firstName: 'Jake' };
   return (
     <section className='home'>
       <div className='home-content'>
