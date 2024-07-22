@@ -5,7 +5,7 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DoughnutChart = ({accounts}: DoughnutChartProps) => {
+const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
     const data = {
         labels: [
           'Red',
@@ -24,8 +24,7 @@ const DoughnutChart = ({accounts}: DoughnutChartProps) => {
         }]
     }
 
-  return
-    <Doughnut data={data} />
+    return <Doughnut data={data} />;
 }
 
 export default DoughnutChart;
