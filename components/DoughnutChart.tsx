@@ -8,23 +8,41 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const DoughnutChart = ({ accounts }: DoughnutChartProps) => {
     const data = {
         labels: [
-          'Red',
-          'Blue',
-          'Yellow'
+          'Bank 1',
+          'Bank 2',
+          'Bank 3'
         ],
-        datasets: [{
+        datasets: [
+          {
           label: 'My First Dataset', 
-          data: [300, 50, 100],
+          data: [1250, 2500, 3750],
           backgroundColor: [
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
+            '#0747b6', '#2265d8', '#2f91fa'],
           hoverOffset: 4
         }]
     }
 
-    return <Doughnut data={data} />;
+    return <Doughnut 
+    data={data} 
+    options={{
+      cutout: '60%',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false,
+          // position: 'top' as const,
+          // labels: {
+            // color: '#000',
+            // font: {
+              // size: 16
+            // }
+          // }
+              }
+              }
+
+    }}
+    />;
 }
 
 export default DoughnutChart;
