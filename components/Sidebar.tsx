@@ -23,7 +23,7 @@ const Sidebar = ({ user }: SiderbarProps) => {
                 <h1 className='sidebar-logo'>Top Bank</h1>
             </Link>
             {sidebarLinks.map((item) => {
-              const isActive = pathname === item.route || pathname.startsWith('${item.route}/')
+              const isActive = pathname === item.route || pathname.startsWith(`${item.route}/`);
                 return (
                   <Link 
                     href={item.route} 
