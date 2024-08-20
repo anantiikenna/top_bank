@@ -64,7 +64,6 @@ const MobileNavbar = ({ user }: MobileNavProps) => {
                             />
                           </div>
                           <p className={`text-16 font-semibold text-black-2 ${isActive && 'text-white'}`}>{item.label}</p>
-                        
                         </Link>
                       </SheetClose>
                     )
@@ -73,13 +72,10 @@ const MobileNavbar = ({ user }: MobileNavProps) => {
                 USER
               </nav>
             </SheetClose>
-
             FOOTER
           </div>
-        
         </SheetContent>
       </Sheet>
-
     </section>
   )
 }
