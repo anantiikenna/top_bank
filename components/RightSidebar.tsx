@@ -1,6 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import BanckCard from './BanckCard';
 
 const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
   return (
@@ -34,9 +35,23 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
             {banks?.length > 0 && (
                 <div className='relative flex flex-1 flex-col items-center justify-center gap-5'>
                     <div className='relative z-10'>
-                        BANK CARD 1
+                        <BanckCard
+                            key={banks[0].id}
+                            account={banks[0]}
+                            userName={`${user.firstName} ${user.lastName}`}
+                            showBalance={false}
+                        />
                     </div>
-                    <div className='absolute right-0 top-8 z-0 w-[90%]'></div>
+                    {banks[1] && (
+                        <div className='absolute right-0 top-8 z-0 w-[90%]'>
+                            <BanckCard
+                                key={banks[0].id}
+                                account={banks[0]}
+                                userName={`${user.firstName} ${user.lastName}`}
+                                showBalance={false}
+                            />
+                        </div>
+                    ) }
                 </div>
             )}
         </section>
@@ -44,4 +59,4 @@ const RightSidebar = ({ user, transactions, banks }: RightSidebarProps) => {
   )
 }
 
-export default RightSidebar
+export default RightSidebar;
