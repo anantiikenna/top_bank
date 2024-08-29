@@ -1,8 +1,11 @@
+import Link from 'next/link';
 import React from 'react'
 
-const BanckCard = ({accounts, userName, showBalance}: Bank) => {
+const BanckCard = ({accounts, userName, showBalance = true}: Bank) => {
   return (
-    <div>BanckCard</div>
+    <div className='flex flex-col'>
+      <Link href="/" className="bank-card"></Link>
+    </div>
   )
 }
 
