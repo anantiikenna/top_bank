@@ -19,15 +19,15 @@ const BanckCard = ({account, userName, showBalance = true}: CreditCardProps) => 
           <article className='flex flex-col gap-2'>
             <div className='flex justify-between'>
             <h1 className='text-12 font-semiboldb text-white'>
-                {userName}
-              </h1>
-              <h2 className='text-12 font-semibold text-white'>
-              ●● / ●●
-              </h2>
-              <p className='text-14 font-semibold tracking[1.1px] text-white'>
-                ●●●● ●●●● ●●●● <span className='text-16'>1234</span>
-              </p>
-            </div>
+              {userName}
+            </h1>
+            <h2 className='text-12 font-semibold text-white'>
+            ●● / ●●
+            </h2>
+            <p className='text-14 font-semibold tracking[1.1px] text-white'>
+              ●●●● ●●●● ●●●● <span className='text-16'>1234</span>
+            </p>
+          </div>
           </article>
         </div>
         <div className='bank-card_icon'>
