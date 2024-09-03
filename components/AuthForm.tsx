@@ -1,4 +1,5 @@
 'use client'
+
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -20,12 +21,12 @@ const AuthForm = ({type}: {type: string}) => {
 
     const formSchema = authFormSchema(type);
      // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: "",
-    },
-  })
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+        email: "",
+        },
+    })
 
   // 2. Define a submit handler.
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
@@ -204,4 +205,4 @@ const AuthForm = ({type}: {type: string}) => {
   )
 }
 
-export default AuthForm
+export default AuthForm;
