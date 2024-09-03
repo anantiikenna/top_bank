@@ -5,15 +5,14 @@ import { z } from 'zod';
 import { authFormSchema } from '@/lib/utils';
 import { Input } from './ui/input';
 
-const formSchema = z.object({
-    email: z.string().email({
-      message: "Invalid email, please enter a valid email",
-    }),
-  })
+//utils.ts
+//Uncomment the same to replace
+//const formSchema = authFormSchema();
+const formSchema = authFormSchema('sign-up');
 
 interface CustomInput {
-    control: Control<z.infer<typeof authFormSchema>>,
-    name: FieldPath<z.infer<typeof authFormSchema>>,
+    control: Control<z.infer<typeof formSchema>>,
+    name: FieldPath<z.infer<typeof formSchema>>,
     label: string,
     placeholder: string,
     type?: string
