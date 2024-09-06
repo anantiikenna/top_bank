@@ -2,10 +2,10 @@
 
 import { sidebarLinks } from '@/constants';
 //import { cn } from '@/lib/utils';
-import Image from 'next/image'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import React from 'react'
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import React from 'react';
 
 const Sidebar = ({ user }: SiderbarProps) => {
   const pathname = usePathname();
@@ -46,10 +46,9 @@ const Sidebar = ({ user }: SiderbarProps) => {
             )}
           USER
         </nav>
-
         FOOTER
     </section>
   )
 }
 
-export default Sidebar
+export default Sidebar;

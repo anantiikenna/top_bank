@@ -18,7 +18,6 @@ interface CustomInput {
     type?: string
 }
 
-
 const CustomInput = ({control, name, label, placeholder, type} : CustomInput) => {
     
   return (
@@ -49,4 +48,4 @@ const CustomInput = ({control, name, label, placeholder, type} : CustomInput) =>
   )
 }
 
-export default CustomInput
+export default CustomInput;
