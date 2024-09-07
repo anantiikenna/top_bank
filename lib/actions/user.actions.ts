@@ -26,19 +26,19 @@ export const signUp = async (userData: SignUpParams) => {
         // const lastName = userData.lastName;
 
         const {email, password, firstName, lastName} = userData;
-        const name = `${firstName} ${lastName}`;
+        
         const { account } = await createAdminClient();
 
         const newUserAccount = await account.create(
             ID.unique(), 
             email, 
             password, 
-            name
+            `${firstName} ${lastName}`
         );
 
         const session = await account.createEmailPasswordSession(email, password);
 
-        cookies().set("apperite-session", session.secret, {
+        cookies().set("appwrite-session", session.secret, {
             path: "/",
             httpOnly: true,
             sameSite: "strict",
@@ -54,8 +54,9 @@ export const signUp = async (userData: SignUpParams) => {
 export async function getLoggedInUser() {
     try {
       const { account } = await createSessionClient();
-      const user = await account.get();
+      const user = await account.get(); 
       return parseStringify(user);
+
     } catch (error) {
       return null;
     }
