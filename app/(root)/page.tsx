@@ -8,7 +8,7 @@ import React from 'react';
 const Home = async () => {
 
   const loggedIn = await getLoggedInUser();
-  
+
   if (!loggedIn) redirect("/sign-in");
 
   return (

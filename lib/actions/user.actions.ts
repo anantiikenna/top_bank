@@ -26,6 +26,7 @@ export const signUp = async (userData: SignUpParams) => {
         // const lastName = userData.lastName;
 
         const {email, password, firstName, lastName} = userData;
+        const name = `${firstName} ${lastName}`;
         
         const { account } = await createAdminClient();
 
@@ -33,7 +34,7 @@ export const signUp = async (userData: SignUpParams) => {
             ID.unique(), 
             email, 
             password, 
-            `${firstName} ${lastName}`
+            name,
         );
 
         const session = await account.createEmailPasswordSession(email, password);
