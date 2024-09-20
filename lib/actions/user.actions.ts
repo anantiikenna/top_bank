@@ -3,9 +3,10 @@
 import { cookies } from "next/headers";
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { ID } from "node-appwrite";
-import { parseStringify } from "../utils";
-import { CountryCode, Products } from "plaid";
+import { encryptId, parseStringify } from "../utils";
+import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum, Products } from "plaid";
 import { plaidClient } from "../plaid";
+import { revalidatePath } from "next/cache";
 
 export const signIn = async ({email, password} : signInProps) => {
     try {
@@ -117,6 +118,44 @@ export const exchangePublicToken = async ({ publicToken, user}: exchangePublicTo
         const accountsResponse = await plaidClient.accountsGet({ access_token: accessToken, });
 
         const accountData = accountsResponse.data.accounts[0];
+
+        // Create a processor token for DWolla using the access token and account ID
+        const request: ProcessorTokenCreateRequest = {
+            access_token: accessToken,
+            account_id: accountData.account_id,
+            processor: 'dwolla' as ProcessorTokenCreateRequestProcessorEnum,
+        }
+
+        const processorTokenResponse = await plaidClient.processorTokenCreate(request);
+        const processorToken = processorTokenResponse.data.processor_token;
+
+        // Create a funding source URL for the account uusing the Dwolla customer ID, processor token, and bank name
+        const fundingSourceUrl = await addFundingSource({ 
+            dwollaCustomerId: user.dwollaCustomerId,
+            processorToken,
+            bankNmae: accountData.name,
+        });
+        
+        //if the funding source URL is not created, throw an error
+        if (!fundingSourceUrl) throw Error;
+
+        //Create a bank account using the user ID, item ID, account ID, access token, funding source URL, and shareable ID
+        await createBankAccount({
+            userId: user.$id,
+            bankId: itemId,
+            accountId: accountData.account_id,
+            accessToken,
+            fundingSourceUrl,
+            shareableId: encryptId(accountData.shareable_id),
+        });
+
+        // Revalidate the path to reflect the changes
+        revalidatePath('/');
+
+        // Return a success message
+        return parseStringify({
+            publicTokenExchange: 'complete',
+        });
 
     } catch (error) {
         console.log('An error occured while creating exchanging token:', error);
