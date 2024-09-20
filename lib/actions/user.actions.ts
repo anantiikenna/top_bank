@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 import { createAdminClient, createSessionClient } from "../appwrite";
 import { ID } from "node-appwrite";
 import { parseStringify } from "../utils";
-import { Products } from "plaid";
+import { CountryCode, Products } from "plaid";
 import { plaidClient } from "../plaid";
 
 export const signIn = async ({email, password} : signInProps) => {
@@ -109,7 +109,15 @@ export const exchangePublicToken = async ({ publicToken, user}: exchangePublicTo
     try {
         //Exchange public token for access token and item ID
         const response = await plaidClient.itemPublicTokenExchange({ public_token: publicToken });
-        const a
+
+        const accessToken = response.data.access_token;
+        const itemId = response.data.item_id;
+
+        //Get account information from Plaid using the access token
+        const accountsResponse = await plaidClient.accountsGet({ access_token: accessToken, });
+
+        const accountData = accountsResponse.data.accounts[0];
+
     } catch (error) {
         console.log('An error occured while creating exchanging token:', error);
     }
