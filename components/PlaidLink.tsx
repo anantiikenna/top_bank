@@ -1,28 +1,44 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { Button } from './ui/button'
+import { useRouter } from 'next/navigation';
+import { PlaidLinkOptions, PlaidLinkOnSuccess, usePlaidLink } from 'react-plaid-link';
 
 const PlaidLink = ({ user, variant, dwollaCustomerId }: PlaidLinkProps) => {
-const [token, setToken] = useState('');
+    const router = useRouter();
+    const [token, setToken] = useState('');
 
-useEffect(() =>{
-    const getLinkToken = async () =>{
-        // const data = await creatLinkToken(user);
-        // setToken(data);
-    }
-    getLinkToken();
-})
-    const onSuccess = useCallback(async () =>{
+    useEffect(() =>{
+        const getLinkToken = async () =>{
+            // const data = await creatLinkToken(user);
+
+            // setToken(data?.linkToken);
+        }
+        getLinkToken();
+    }, []);
+    const onSuccess = useCallback<PlaidLinkOnSuccess>(async (public_token: string) => {
+        // await exchangePublicToken({
+        //     publicToken: public_token,
+        //     user,
+        // })
+
+        router.push('/');
 
     }, [user])
 
-    const config: PlainLinkOption = {
-        token: '',
-        onSuccess: (),
-    }  
+    const config: PlaidLinkOptions = {
+        token,
+        onSuccess,
+    }
+
+    const { open, ready } = usePlaidLink(config);
+
   return (
     <>
         {variant === 'primary' ? (
-            <Button className='plaidlink-primary'>
+            <Button 
+                onClick={() => open()}
+                disabled={!ready}
+                className='plaidlink-primary'>
                 Connect bank
             </Button>
             ): variant === 'ghost' ? (
