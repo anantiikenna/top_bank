@@ -7,6 +7,14 @@ import { encryptId, parseStringify } from "../utils";
 import { CountryCode, ProcessorTokenCreateRequest, ProcessorTokenCreateRequestProcessorEnum, Products } from "plaid";
 import { plaidClient } from "../plaid";
 import { revalidatePath } from "next/cache";
+import { addFundingSource } from "./dwolla.action";
+
+const { 
+    APPWRITE_DATABASE_ID: DATABASE_ID,
+    APPWRITE_USER_COLLECTION_ID: USER_COLLECTION_ID,
+    APPWRITE_BANK_COLLECTION_ID: BANK_COLLECTION_ID,
+    APPWRITE_TRANSACTION_COLLECTION_ID: TRANSACTION_COLLECTION_ID,
+} = process.env;
 
 export const signIn = async ({email, password} : signInProps) => {
     try {
@@ -106,6 +114,37 @@ export const createLinkToken = async (user: User) => {
     }
 }
 
+export const createBankAccount = async ({
+    userId,
+    bankId,
+    accountId,
+    accessToken,
+    fundingSourceUrl,
+    shareableId,
+}: createBankAccountProps) => {
+    try {
+        const { database } = await createAdimClient();
+        const bankAccount = await createDocument(
+            DATABASE_ID,
+            BANK_COLLECTION_ID,
+            ID.unique(),
+            {
+                userId,
+                bankId,
+                accountId,
+                accessToken,
+                fundingSourceUrl,
+                shareableId,
+            }
+        )
+
+        return parseStringify(bankAccount);
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const exchangePublicToken = async ({ publicToken, user}: exchangePublicTokenProps) => {
     try {
         //Exchange public token for access token and item ID
@@ -133,7 +172,7 @@ export const exchangePublicToken = async ({ publicToken, user}: exchangePublicTo
         const fundingSourceUrl = await addFundingSource({ 
             dwollaCustomerId: user.dwollaCustomerId,
             processorToken,
-            bankNmae: accountData.name,
+            bankName: accountData.name,
         });
         
         //if the funding source URL is not created, throw an error
@@ -146,7 +185,7 @@ export const exchangePublicToken = async ({ publicToken, user}: exchangePublicTo
             accountId: accountData.account_id,
             accessToken,
             fundingSourceUrl,
-            shareableId: encryptId(accountData.shareable_id),
+            shareableId: encryptId(accountData.account_id),
         });
 
         // Revalidate the path to reflect the changes
