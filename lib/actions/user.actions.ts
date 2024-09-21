@@ -123,10 +123,10 @@ export const createBankAccount = async ({
     shareableId,
 }: createBankAccountProps) => {
     try {
-        const { database } = await createAdimClient();
-        const bankAccount = await createDocument(
-            DATABASE_ID,
-            BANK_COLLECTION_ID,
+        const { database } = await createAdminClient();
+        const bankAccount = await database.createDocument(
+            DATABASE_ID!,
+            BANK_COLLECTION_ID!,
             ID.unique(),
             {
                 userId,
