@@ -2,9 +2,9 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Button } from './ui/button'
 import { useRouter } from 'next/navigation';
 import { PlaidLinkOptions, PlaidLinkOnSuccess, usePlaidLink } from 'react-plaid-link';
-import { createLinkToken } from '@/lib/actions/user.actions';
+import { createLinkToken, exchangePublicToken } from '@/lib/actions/user.actions';
 
-const PlaidLink = ({ user, variant, dwollaCustomerId }: PlaidLinkProps) => {
+const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
     const router = useRouter();
     const [token, setToken] = useState('');
 
@@ -18,10 +18,10 @@ const PlaidLink = ({ user, variant, dwollaCustomerId }: PlaidLinkProps) => {
     }, [user]);
 
     const onSuccess = useCallback<PlaidLinkOnSuccess>(async (public_token: string) => {
-        // await exchangePublicToken({
-        //     publicToken: public_token,
-        //     user,
-        // })
+        await exchangePublicToken({
+            publicToken: public_token,
+            user,
+        })
 
         router.push('/');
 
