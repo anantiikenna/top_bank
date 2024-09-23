@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Button } from './ui/button'
+import { useCallback, useEffect, useState } from 'react';
+import { Button } from './ui/button';
 import { useRouter } from 'next/navigation';
 import { PlaidLinkOptions, PlaidLinkOnSuccess, usePlaidLink } from 'react-plaid-link';
 import { createLinkToken, exchangePublicToken } from '@/lib/actions/user.actions';
@@ -57,4 +57,4 @@ const PlaidLink = ({ user, variant }: PlaidLinkProps) => {
   )
 }
 
-export default PlaidLink
+export default PlaidLink;
