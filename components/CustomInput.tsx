@@ -1,6 +1,6 @@
 import { Control, FieldPath, } from 'react-hook-form'
 import { FormControl, FormField, FormLabel, FormMessage } from './ui/form'
-import { zodResolver } from '@hookform/resolvers/zod'
+// import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod';
 import { authFormSchema } from '@/lib/utils';
 import { Input } from './ui/input';
